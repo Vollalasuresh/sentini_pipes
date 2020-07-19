@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Your Cart Products</h5>
+            </div>
+            <div class="card-body">
+                <div class="card">
+                    <main>
+
+                        <section class="summary">
+                            <div class="items">🛒 2 items</div>
+                            <div class="total">Rs.415.00</div>
+                        </section>
+
+                        <section class="actions">
+                            <div class="form-group col-md-12 p-0">
+                                <form [formGroup]='OtpForm' (ngSubmit)="validateOTP()">
+                                    <label for="inputZip" style="float:left">Enter OTP got on your Mobile:</label>
+                                    <input type="number" class="form-control" id="otp">
+                                </form>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <button class="btn btn-primary" type="submit">Verify OTP</button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button class="btn btn-primary" type="submit">Place Order</button>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </section>
+
+                        <section class="cart">
+                            <ul>
+                                <li class="item">
+                                    <h6 class="name">1.SDR 11 3MTS SIZE: 3/4"</h6>
+                                    <p class="price">Rs.231.00</p>
+                                </li>
+                                <li class="item">
+                                    <h6 class="name">2.SDR 11 3MTS SIZE: 1/2"</h6>
+                                    <p class="price">Rs.115.00</p>
+                                </li>
+
+                            </ul>
+                        </section>
+                    </main>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>

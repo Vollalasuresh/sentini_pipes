@@ -1,0 +1,59 @@
+<div class="card">
+
+  <div class="card-body">
+    <h4 class="card-title">Create Product</h4>
+    <form class="example-form" [formGroup]='prodForm' (ngSubmit)="postProducts()">
+      <div class="row">
+        <!-- <div class="col">
+          <input type="text" class="form-control" placeholder="Product Id"  formControlName = "prod_Id">
+        </div> -->
+        <div class="form-group col-md-6">
+          <input type="text" class="form-control" placeholder="S.No" formControlName="sno">
+        </div>
+
+        <div class="form-group col-md-6">
+          <select id="inputState" class="form-control" placeholder="prod_Type" formControlName="prod_Type">
+            <option selected>Product type...</option>
+            <option>CPVC</option>
+            <option>UPVC</option>
+            <option>Agro</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <input type="text" class="form-control" placeholder="item name" formControlName="item">
+        </div>
+        <div class="form-group col-md-6">
+          <select id="size" class="form-control" placeholder="size" formControlName="size">
+            <option selected>Select Size...</option>
+            <option>1/2"</option>
+            <option>3/4"</option>
+            <option>1"</option>
+            <option>1 1/4"</option>
+            <option>1 1/2"</option>
+            <option>2"</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <input type="text" class="form-control" placeholder="skucode" formControlName="sku_Code">
+        </div>
+        <div class="form-group col-md-6">
+          <input type="text" class="form-control" placeholder="sku desp" formControlName="sku_Desdription">
+        </div>
+        <div class="form-group col-md-6">
+          <input type="text" class="form-control" placeholder="std pkg" formControlName="std_Pkg">
+        </div>
+        <div class="form-group col-md-6">
+          <input type="text" class="form-control" placeholder="cost" formControlName="price">
+        </div>
+        <div class="form-group col-md-3">
+          <input type="text" class="form-control" placeholder="Dealder Discount" formControlName="dealDiscount">
+        </div>
+        <div class="form-group col-md-3">
+          <input type="text" class="form-control" placeholder="Distributor Discount" formControlName="disDiscount">
+        </div>
+
+      </div>
+      <button type="submit" class="btn btn-info">Create</button>
+    </form>
+  </div>
+</div>

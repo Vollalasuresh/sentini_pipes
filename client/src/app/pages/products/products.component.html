@@ -1,0 +1,125 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card demo-icons">
+      <div class="card-header">
+        <h5 class="card-title">All Products</h5>
+        <p class="card-category">Handcrafted by our Men at
+          <a href="">SENTINI</a>
+        </p>
+        <button type="button" class="btn btn-info text-right" (click)="openProd()">Create Product</button>
+        <input type="file" id="input" (change)="onImportChange($event)" />
+      </div>
+      <div class="card-body">
+        <div id="icons-wrapper">
+          <section>
+            <div class="table-responsive">
+              <table class="table">
+                <thead class=" text-primary">
+                  <th>S.No</th>
+                  <th>
+                    Item Name
+                  </th>
+                  <th>
+                    SKU Code
+                  </th>
+                  <th>
+                    Standard Pkg
+                  </th>
+                  <th>
+                    Price
+                  </th>
+                  <th>
+                    Dealer %
+                  </th>
+                  <th>
+                    Distributor %
+                  </th>
+                  <!-- <th>
+                    Prod Image
+                  </th> -->
+                  <th>
+                    Actions
+                  </th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let product of products ">
+                    <td>{{product.sNo}}</td>
+                    <td>
+                      {{product.item}}
+                    </td>
+                    <td>
+                      {{product.sku_Code}}
+                    </td>
+                    <td>
+                      {{product.std_Pkg}}
+                    </td>
+                    <td>
+                      {{product.price}}
+                    </td>
+                    <td>
+                      {{product.dealDiscount}}
+                    </td>
+                    <td>
+                      {{product.disDiscount}}
+                    </td>
+                    <!-- <td>
+                      {{product.productImage}}
+                    </td> -->
+                    <td>
+                      <button class="btn btn-primary btn-sm" (click)="open(mymodal,product.sNo)">Edit</button>
+                      <button class="btn btn-danger btn-sm">Delte</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <ng-template #mymodal let-modal>
+                <div class="modal-header">
+                  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h6>Edit Product</h6>
+                  <div class="row">
+                    <div class="form-group col-md-6">
+                      <input type="text" class="form-control" [(ngModel)]="productInfo.item" value="prodctInfo.item">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <input type="text" class="form-control" [(ngModel)]="productInfo.size">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <input type="text" class="form-control" [(ngModel)]="productInfo.std_Pkg">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <input type="text" class="form-control" [(ngModel)]="productInfo.sku_Code">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <input type="text" class="form-control" [(ngModel)]="productInfo.sku_Desdription">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <input type="text" class="form-control" [(ngModel)]="productInfo.price">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <input type="text" class="form-control" [(ngModel)]="productInfo.dealDiscount">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <input type="text" class="form-control" [(ngModel)]="productInfo.disDiscount">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <input type="file" class="form-control" [(ngModel)]="productInfo.prodImage" />
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-info text-right">Edit History</button>
+                  <button type="button" class="btn btn-info text-right"
+                    (click)="modal.close('Save click')">Save</button>
+                </div>
+              </ng-template>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

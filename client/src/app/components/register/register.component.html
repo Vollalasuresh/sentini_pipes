@@ -1,0 +1,75 @@
+<div class="card" style="width: 50rem;margin:0 auto; margin-top: 5rem;">
+  <div class="card-body">
+    <h4 class="card-title">Register</h4>
+    <form>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="firstName">First Name</label>
+          <input [(ngModel)]="registerUserData.firstName" type="text" class="form-control" name="firstName"
+            id="firstName">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="lastName">Last Name</label>
+          <input [(ngModel)]="registerUserData.lastName" type="text" class="form-control" name="lastName" id="lastName">
+        </div>
+      </div>
+      <!-- <div class="form-group">
+      <label for="userType">Register As</label>
+      <input [(ngModel)]="registerUserData.userType" type="text" class="form-control" name="userType" id="userType">
+    </div> -->
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputState">Register As</label>
+          <select [(ngModel)]="registerUserData.userType" type="text" class="form-control" name="userType"
+            id="userType">
+            <option selected>Choose...</option>
+            <option>Dealer</option>
+            <option>Distributor</option>
+            <option>Agro Distributor</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="email">Contact</label>
+          <input [(ngModel)]="registerUserData.phone" type="text" class="form-control" name="phone" id="phone">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="email">E-mail</label>
+          <input [(ngModel)]="registerUserData.mail_Id" type="text" class="form-control" name="mail_Id" id="email">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="exampleInputPassword1">Password</label>
+          <input [(ngModel)]="registerUserData.password" type="password" class="form-control" name="password"
+            id="exampleInputPassword1" (change)="onPasswordChange()">
+        </div>
+
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="city">City</label>
+          <input [(ngModel)]="registerUserData.city" type="text" class="form-control" name="city" id="city">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="state">State</label>
+          <input [(ngModel)]="registerUserData.state" type="text" class="form-control" name="state" id="state">
+        </div>
+        <div class="form-group col-md-2">
+          <label for="pincode">Pincode</label>
+          <input [(ngModel)]="registerUserData.pinCode" type="text" class="form-control" name="pinCode" id="pincode">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="pincode">address</label>
+        <input [(ngModel)]="registerUserData.address" type="text" class="form-control" name="address" id="address">
+      </div>
+
+      <!-- <div class="form-group">
+        <label for="exampleInputPassword2">Re Enter Password</label>
+        <input [(ngModel)]="loginUserData.password" type="password" class="form-control" name="pwd" id="exampleInputPassword1" placeholder="Re-enter Password">
+      </div> -->
+
+      <button (click)="registerUser()" type="submit" class="btn btn-primary">Register</button>
+    </form>
+  </div>
+</div>
