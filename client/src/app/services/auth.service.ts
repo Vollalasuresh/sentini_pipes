@@ -12,7 +12,8 @@ export class AuthService {
   constructor(private _http: HttpClient, private router: Router) { }
 
   loginUser(user) {
-    return this._http.post<any>(this.login_url, user)
+    return this._http.post<any>(this.login_url, user);
+    localStorage.setItem('userId', JSON.stringify(user));
   }
 
   logout() {

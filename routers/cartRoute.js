@@ -1,5 +1,8 @@
-const express = require('express')
-const nodemailer = require('nodemailer');
+const express = require('express');
+var nodemailer = require('nodemailer');
+const ejs = require("ejs");
+var smtpTransport = require('nodemailer-smtp-transport');
+
 const router = express.Router()
 var _ = require('lodash')
 const fs = require('fs')
@@ -10,11 +13,11 @@ const Cart = require('../models/cartModel');
 const { result } = require('lodash');
 
 
-router.get('/getCart', (req, res, next) => {
+router.get('/getCart/:user_Id', (req, res, next) => {
 
-    Cart.find({ user_Id: "5ef1723e28c36846cc8968a6" }).then((cart) => {
+    Cart.find({ user_Id: req.params.user_Id }).then((cart) => {
         console.log("user carts", cart)
-        res.send({ cart });
+        res.send(cart);
 
     }).catch((e) => {
         console.log(e);
@@ -24,110 +27,110 @@ router.get('/getCart', (req, res, next) => {
 
 router.post('/addToCart', (req, res, next) => {
 
-    console.log("cart user details", req.user)
-    console.log("cart sess", res.locals.session)
+    console.log("products details", req.body)
 
-    var userid = req.userId;
-    Cart.find({ user_Id: userid }).then((cart) => {
-        cart.products.push(req.body.item)
-    })
-    var cart = new Cart({
-        user_Id: userid,
-        products: req.body.products
+    var userid = req.body.user_Id;
+    Cart.find({ user_Id: userid }).then((carts) => {
+        console.log("carts", carts)
+
+
+        if (carts.length) {
+            var prods = carts[0].products
+
+            _.each(prods, (p) => {
+                if (p.sNo === req.body.item.sNo) {
+                    carts[0].products.push({
+                        sNo: req.body.item.sNo,
+                        quantity: p.quantity + req.body.item.quantity,
+                        price: p.price + req.body.item.price,
+                        size: req.body.item.size
+
+                    })
+
+
+
+                }
+                else {
+                    carts[0].products.push(req.body.item)
+                    console.log("SS", p)
+
+                }
+            })
+
+            console.log("befor up ", carts[0].products)
+            Cart.update({ user_Id: req.body.user_Id }, { $set: carts[0] }, { new: true }).then((results) => {
+                console.log("Updating", results);
+                res.send(results);
+            }).catch((e) => {
+                console.log(e)
+                res.send(e);
+            })
+            console.log("After pushing item", carts)
+
+        }
+        else {
+            var cart = new Cart({
+                user_Id: userid,
+
+            })
+            cart.products.push(req.body.item)
+
+            console.log("else cart", cart)
+            cart.save().then((cart) => {
+                // console.log("cart saved success", cart);
+                res.send(cart)
+            }).catch((e) => {
+                console.log(e);
+                res.send(e)
+            })
+        }
 
     })
-    cart.save().then((cart) => {
-        console.log("cart saved success", cart);
-        res.send(cart)
-    }).catch((e) => {
-        console.log(e);
-        res.send(e)
-    })
+
 })
 
 router.post('/placeOrder', (req, res) => {
     var body;
     var items = []
     var t = {
-        items: req.body.products
+        items: req.body
     }
-    console.log("data", t)
-    _.each(t, function (d) {
-        items.push({
-            sno: d.sNo,
-            qty: d.qty,
-            price: d.price
-        })
-
-    })
-    console.log("tttt", t)
-    for (var key in t) {
-        console.log(key, t[key]);
-        if (t[key] == null) {
-            t[key] = '';
+    console.log("placing order", req.body)
+    //console.log("Final ", t)
+    var transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com', //host of mail service provider
+        port: 465,
+        secure: true,
+        auth: {
+            user: 'taduri.nagarjunavihari@gmail.com',
+            pass: 'wfbkaouyhqvdeibv'
         }
-    }
-    var tmpFile = "./tmp/file_" + new Date().getTime() + ".html";
-    var template = fs.readFileSync('C:/Users/Dell/piping sol/routers/templates/products.html', 'utf8')
-
-    console.log(" readFileSync", template)
-    // freemarker.render(template, t, (err, result) => {
-    //     if (err) {
-    //         throw new Error(err);
-    //     }
-    //     console.log("resn", result);
-    // });
-
-    var pm = new Promise((resolve, reject) => {
-        freemarker.render(template, t, (err, content) => {
-            console.log("in render", err)
-            if (err) {
-                console.log("readerr", err)
-                reject(new Error(err));
-            }
-            console.log("Services :::  parseContent :: content : " + content.length);
-            if (content) {
-                fs.writeFile(tmpFile, content, 'utf8', function (err) {
-                    if (err) reject(err);
-                    resolve(tmpFile);
-                })
-            } else {
-                console.log("Services :::  parseContent :: content not rendered  ");
-                reject("unable to render freemarker template")
-            }
-        });
     });
-    console.log("pm", pm)
-    var transporter
-    // pm.then((ab) => {
-    //     body = fs.readFileSync(tmpFile, 'utf8');
 
-    //     transporter = nodemailer.createTransport({
-    //         host: "smtp.gmail.com",
-    //         port: 465,
-    //         secure: true,
-    //         auth: {
-    //             user: "nvtaduri@softility.com",
-    //             pass: "Vihari@9406"
-    //         }
-    //     });
-    //     transporter.sendMail({
-    //         from: "nvtaduri@softility.com",
-    //         to: "taduri.nagarjunavihari@gmail.com",
-    //         subject: "Test",
-    //         html: body,
-
-    //     }).then((info) => {
-    //         return (info)
-
-    //     })
-    //         .catch(e => {
-    //             throw e
-    //         })
-    // }).catch(e => {
-    //     console.log(e)
-    // })
-
+    ejs.renderFile("./views/products.ejs", { items: t.items }, function (err, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('==== result')
+            var mainOptions = {
+                from: 'taduri.nagarjunavihari@gmail.com',
+                to: "nvtaduri@softility.com",
+                subject: 'Hello, world',
+                html: data
+            };
+            // console.log("html data ======================>", mainOptions.html);
+            transporter.sendMail(mainOptions, function (err, info) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    // console.log('Message sent: ' + info.response);
+                    res.json({
+                        response: info.response
+                    })
+                }
+            });
+        }
+    });
 })
 
 

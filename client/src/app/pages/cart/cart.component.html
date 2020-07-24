@@ -9,8 +9,8 @@
                     <main>
 
                         <section class="summary">
-                            <div class="items">🛒 2 items</div>
-                            <div class="total">Rs.415.00</div>
+                            <div class="items">🛒 {{totalItems}} items</div>
+                            <div class="total"><b>Rs.{{total}}.00</b></div>
                         </section>
 
                         <section class="actions">
@@ -24,28 +24,36 @@
                                         <button class="btn btn-primary" type="submit">Verify OTP</button>
                                     </div>
                                     <div class="col-md-6">
-                                        <button class="btn btn-primary" type="submit">Place Order</button>
+                                        <button class="btn btn-primary" type="submit"
+                                            (click)="placeOrder()">Order</button>
                                     </div>
                                 </div>
-
-
                             </div>
-
                         </section>
 
                         <section class="cart">
+                            <h5>CPVC Products:</h5>
                             <ul>
-                                <li class="item">
-                                    <h6 class="name">1.SDR 11 3MTS SIZE: 3/4"</h6>
-                                    <p class="price">Rs.231.00</p>
+                                <li class="item" *ngFor="let cartItem of cartItems; let ndx = index">
+                                    <h6 class="name">{{ndx+1}}.{{cartItem.item}} {{cartItem.size}}
+                                        {{cartItem.price}} x {{cartItem.quantity}}</h6>
+                                    <p class="price">Rs.{{cartItem.price * cartItem.quantity}}.00</p>
                                 </li>
-                                <li class="item">
-                                    <h6 class="name">2.SDR 11 3MTS SIZE: 1/2"</h6>
-                                    <p class="price">Rs.115.00</p>
-                                </li>
-
                             </ul>
+                            <br>
+                            <h5> UPVC Products:</h5>
+                            <!-- <ul>
+                                <li class="item" *ngFor="let cartItem of cartItems">
+                                    <h6 class="name">{{cartItem.sNo}}.{{cartItem.item}} {{cartItem.size}}
+                                        {{cartItem.quantity}}</h6>
+                                    <p class="price">Rs.{{cartItem.price * cartItem.quantity}}.00</p>
+                                </li>
+                            </ul> -->
+                            <br>
+                            <h5 class="text-right">Total Price <b>Rs{{total}}.00</b></h5>
+                            <p class="text-right">(inclusive of GST @18%)</p>
                         </section>
+
                     </main>
                 </div>
             </div>

@@ -15,7 +15,9 @@ export class LoginComponent implements OnInit {
   loginUser() {
     this._auth.loginUser(this.loginUserData).subscribe(res => {
       console.log("loggedin user", res.token);
-      localStorage.setItem('sessionid', res.token);
+      localStorage.setItem('userid', JSON.stringify(res.token));
+      var a = JSON.parse(localStorage.getItem('userid'))
+      console.log('from storage', a.userId)
       this.router.navigate(['/dashboard']);
     })
   }

@@ -15,6 +15,4 @@ export class RegisterComponent implements OnInit {
     this._auth.registerUser(this.registerUserData).subscribe(res => console.log(res))
   }
 
-
-
 }

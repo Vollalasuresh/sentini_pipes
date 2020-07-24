@@ -11,12 +11,10 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 export class CpvcComponent implements OnInit {
   productsForm = this.fb.group({ 'productsList': this.fb.array([]) });
   selectedProducts = [];
-
   constructor(private _http: HttpClient, private router: Router, private fb: FormBuilder) { }
   @Output() products: any = [];
   @Output() productAdded = new EventEmitter();
   ngOnInit() {
-    // this.productsForm = this.fb.group({ 'productsList': this.fb.array([]) });
     this.getProds();
   }
   getProds() {
@@ -31,20 +29,21 @@ export class CpvcComponent implements OnInit {
 
 
   addProductToCart(product, index) {
-
-    console.log("Addto csrd",)
+    var a = JSON.parse(localStorage.getItem('userid'))
+    console.log("Addto cart", a.userId)
     const selectedProduct = {
-      sNo: product.sNo,
-      quantity: (<FormArray>this.productsForm.get('productsList')).controls[index].get('quantity').value,
-      sku_Code: product.sku_Code
+      item: {
+        sNo: product.sNo,
+        item: product.item,
+        quantity: (<FormArray>this.productsForm.get('productsList')).controls[index].get('quantity').value,
+        price: product.price,
+        size: product.size
+      },
+      user_Id: a.userId
     };
     this._http.post("http://localhost:9000/cart/addToCart", selectedProduct).subscribe(res => {
       this.productAdded.emit(product);
     });
-    console.log(product)
+    console.log(selectedProduct)
   }
-
-
-
-
 }

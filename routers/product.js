@@ -11,7 +11,7 @@ var _ = require('lodash')
 var counter;
 var prodId
 var editHistory = {};
-const url = 'mongodb://localhost:27017/pipemon'
+const url = 'mongodb://localhost:27017/pipes'
 
 let storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -37,7 +37,7 @@ router.get('/', (req, res, next) => {
     console.log("user details", req.user)
 
     products.find().sort({ sNo: 1 }).then((prod) => {
-        console.log("user details", prod)
+        // console.log("user details", prod)
         res.send(prod)
     }).catch(e => console.log(e))
 })
@@ -70,8 +70,8 @@ router.post('/saveProduct', upload.single('productImage'), (req, res, next) => {
 })
 
 router.get('/productList/:id', (req, res, next) => {
-    console.log("dele", req.params.id)
-    var id = "25"
+    // console.log("dele", req.params.id)
+    // var id = "25"
     products.find({ sNo: req.params.id }).then((data) => {
         console.log("deleted", data)
         res.send(data)

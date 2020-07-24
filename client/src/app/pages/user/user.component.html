@@ -214,7 +214,7 @@
               <table class="table">
                 <thead class=" text-primary">
                   <th>
-                   Dealer Name
+                    Dealer Name
                   </th>
                   <th>
                     E-mail
@@ -225,11 +225,14 @@
                   <th>
                     City
                   </th>
+                  <th>
+                    Status
+                  </th>
                 </thead>
                 <tbody>
-                  <tr *ngFor = "let user of users">
+                  <tr *ngFor="let user of users">
                     <td>
-                     {{user.firstName}}
+                      {{user.firstName}}
                     </td>
                     <td>
                       {{user.mail_Id}}
@@ -237,7 +240,17 @@
                     <td>
                       {{user.phone}}
                     </td>
+                    <td>
                       {{user.city}}
+                    </td>
+                    <td>
+                      <div>
+                        <label class="switch">
+                          <input type="checkbox">
+                          <span class="slider"></span>
+                        </label>
+                      </div>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -248,4 +261,3 @@
     </div>
   </div>
 </div>
-

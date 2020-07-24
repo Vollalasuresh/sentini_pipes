@@ -8,9 +8,11 @@ var session = require('express-session');
 var passport = require('passport');
 var ms = require('connect-mongo')(session);
 const flash = require('connect-flash');
-const url = 'mongodb://localhost:27017/pipemon'
+const url = 'mongodb://localhost:27017/pipes'
 const app = express()
 
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs');
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname)))

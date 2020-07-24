@@ -6,7 +6,10 @@ const Users = require('../models/userModel')
 const { count } = require('../models/userModel');
 const e = require('express')
 const { compact } = require('lodash')
+const axios = require('axios')
 var m = require('../models/message')
+var requestPromise = require('request-promise')
+const { text } = require('body-parser')
 
 
 
@@ -16,7 +19,14 @@ const nx = new nexmo({
     apiSecret: 'sQJOfIulRcN3G66V'
 });
 
-
+// const tlClient = axios.create({
+//     baseURL: "https://api.textlocal.in/",
+//     params: {
+//         apiKey: "YOUR API KEY", //Text local api key
+//         sender: "6 CHARACTER SENDER ID"
+//     }
+// });
+// console.log("txt local", tlClient)
 router.get('/', (req, res, next) => {
 
     Users.find().then((user) => {
@@ -110,7 +120,25 @@ router.post('/saveUser', function (req, res, next) {
 router.post('/sendOtp', (req, res) => {
 
 
-    text = req.body.msg;
+    // message = {
+    //     number: "+917989563354",
+    //     msg: 123
+
+    // }
+
+    // var sms = requestPromise({
+    //     method: 'POST',
+    //     uri: 'https://api.textlocal.in/send',
+    //     params: {
+    //         apiKey: "Oo4nTJbjGP0-lil1xlv09wXnaGEIh24nue8vTB5gJm", //Text local api key
+    //         sender: "6 CHARACTER SENDER ID",
+    //         number: '+917989563354',
+    //         message: "123"
+    //     }
+    // })
+    // console.log("smsm", sms)
+
+
     nx.message.sendSms(9951180437, req.body.number, req.body.msg, (err, data) => {
         console.log("nexmo", data)
         if (err) {
